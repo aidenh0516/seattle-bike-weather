@@ -9,8 +9,6 @@ malformed line (too many fields) and one trip from the Pronto repair
 shop, which are the two data problems found in the real trip.csv.
 """
 
-import math
-
 import pandas as pd
 
 import eda
@@ -23,7 +21,7 @@ STATIONS = 'station_small.csv'
 
 def close(a, b):
     """Returns True if two floats are equal up to rounding error."""
-    return math.isclose(a, b, abs_tol=1e-6)
+    return abs(a - b) < 0.000001
 
 
 def test_load_trips():
@@ -53,6 +51,13 @@ def test_load_weather():
     assert list(weather['day_type']) == ['Weekday', 'Weekend',
                                          'Weekend', 'Weekday']
     print('test_load_weather passed')
+
+
+def test_month_label():
+    """Checks that one-digit months get a leading 0."""
+    assert eda.month_label('6/14/2015') == '2015-06'
+    assert eda.month_label('10/13/2014') == '2014-10'
+    print('test_month_label passed')
 
 
 def test_load_stations():
@@ -90,8 +95,8 @@ def test_trips_with_stations():
     assert hoods['South Lake Union'] == 1
     assert hoods.index[0] == 'Capitol Hill'
     per_station = eda.trips_per_station(joined)
-    assert list(per_station['name']) == ['A St', 'B St']
-    assert list(per_station['trips']) == [2, 1]
+    assert list(per_station.index) == ['A St', 'B St']
+    assert list(per_station) == [2, 1]
     print('test_trips_with_stations passed')
 
 
@@ -99,9 +104,9 @@ def test_missing_report():
     """Checks missing counts and percents on the small trip file."""
     trips = eda.load_trips(TRIPS)
     report = eda.missing_report(trips)
-    assert list(report.index) == ['gender', 'birthyear']
+    assert list(report['column']) == ['gender', 'birthyear']
     assert list(report['missing']) == [2, 2]
-    assert close(report.loc['gender', 'percent'], 50)
+    assert close(report.loc[0, 'percent'], 50)
     no_missing = pd.DataFrame({'a': [1, 2], 'b': [3, 4]})
     assert len(eda.missing_report(no_missing)) == 0
     print('test_missing_report passed')
@@ -123,7 +128,7 @@ def test_seven_number_summary():
     """Checks the summary against values worked out by hand."""
     summary = eda.seven_number_summary(pd.Series([1, 2, 3, 4, 5]))
     assert close(summary['mean'], 3)
-    assert close(summary['std'], math.sqrt(2.5))
+    assert close(summary['std'], 2.5 ** 0.5)
     assert close(summary['min'], 1)
     assert close(summary['Q1'], 2)
     assert close(summary['median'], 3)
@@ -153,6 +158,7 @@ def test_full_data_totals():
 def main():
     test_load_trips()
     test_load_weather()
+    test_month_label()
     test_load_stations()
     test_daily_trip_weather()
     test_trips_with_stations()
