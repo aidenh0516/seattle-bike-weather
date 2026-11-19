@@ -2,11 +2,11 @@
 Aiden Hoang
 CSE 163 Final Project, Part 2: Exploratory Data Analysis
 
-Tests for eda.py. Every function is run on small hand-made CSV files in
-test_data/ where the right answers were worked out by hand. The small
-trip file includes one malformed line (too many fields) and one trip from
-the Pronto repair shop, which are the two data problems found in the
-real trip.csv.
+Tests for eda.py. Every function is run on small hand-made CSV files
+(trip_small.csv, weather_small.csv, station_small.csv) where the right
+answers were worked out by hand. The small trip file includes one
+malformed line (too many fields) and one trip from the Pronto repair
+shop, which are the two data problems found in the real trip.csv.
 """
 
 import math
@@ -16,9 +16,9 @@ import pandas as pd
 import eda
 
 
-TRIPS = 'test_data/trip_small.csv'
-WEATHER = 'test_data/weather_small.csv'
-STATIONS = 'test_data/station_small.csv'
+TRIPS = 'trip_small.csv'
+WEATHER = 'weather_small.csv'
+STATIONS = 'station_small.csv'
 
 
 def close(a, b):

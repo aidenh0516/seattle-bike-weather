@@ -7,7 +7,7 @@ It loads trip.csv, weather.csv, and station.csv from the data/ folder,
 cleans them, builds the joined datasets used by each research question,
 prints the size / missing data / summary statistics for each one, checks
 the assumptions for the statistical tests planned for the Result Validity
-challenge goal, and saves every plot to the figures/ folder.
+challenge goal, and saves every plot as a .png in the same folder as this file.
 
 Joined datasets:
     1. daily trips + weather (joined on date), for the temperature question
@@ -23,7 +23,7 @@ from scipy import stats
 
 
 DATA_DIR = 'data'
-FIG_DIR = 'figures'
+FIG_DIR = '.'
 
 WEEKDAY_COLOR = '#2a78d6'
 WEEKEND_COLOR = '#eb6834'
