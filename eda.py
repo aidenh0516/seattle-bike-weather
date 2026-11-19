@@ -19,7 +19,6 @@ Joined datasets:
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-from scipy import stats
 
 
 DATA_DIR = 'data/'
@@ -303,11 +302,11 @@ def plot_rq1_assumptions(daily, path):
 
 def check_rq1_assumptions(daily):
     """
-    Checks the assumptions of a Pearson correlation between daily mean
+    Checks the assumptions for a correlation test between daily mean
     temperature and daily trip count. Returns a dictionary with the
-    Shapiro-Wilk p-values, the correlation between each day's trip count
-    and the day before's (to check independence), and the Pearson and
-    Spearman correlations (as a preview, not the final test).
+    correlation between each day's trip count and the day before's (to
+    check if days are independent) and the correlation between
+    temperature and trips (as a preview, not the final test).
     """
     temp = daily['Mean_Temperature_F']
     count = daily['trip_count']
@@ -315,45 +314,36 @@ def check_rq1_assumptions(daily):
     today = pd.Series(count_list[1:])
     yesterday = pd.Series(count_list[:-1])
     return {
-        'shapiro_p_trips': stats.shapiro(count).pvalue,
-        'shapiro_p_temp': stats.shapiro(temp).pvalue,
         'day_to_day_corr': today.corr(yesterday),
-        'pearson_r': temp.corr(count),
-        'spearman_rho': temp.corr(count, method='spearman'),
+        'temp_trips_corr': temp.corr(count),
     }
 
 
 def check_rq2_assumptions(trips):
     """
-    Checks the assumptions of a two-sample t-test on trip length between
-    weekdays and weekends. Returns a dictionary with group sizes, the
-    skewness of each group, and the Levene test p-value for equal
-    variances.
+    Checks the assumptions for a two-sample t-test on trip length between
+    weekdays and weekends. Returns a dictionary with the size, mean, and
+    median of each group. Large groups mean the Central Limit Theorem
+    applies, and a mean much bigger than the median shows the data is
+    skewed.
     """
     weekday = trips[trips['day_type'] == 'Weekday']['minutes']
     weekend = trips[trips['day_type'] == 'Weekend']['minutes']
     return {
         'n_weekday': len(weekday),
         'n_weekend': len(weekend),
-        'skew_weekday': weekday.skew(),
-        'skew_weekend': weekend.skew(),
-        'levene_p': stats.levene(weekday, weekend).pvalue,
+        'mean_weekday': weekday.mean(),
+        'median_weekday': weekday.median(),
+        'mean_weekend': weekend.mean(),
+        'median_weekend': weekend.median(),
     }
 
 
 def print_results(name, results):
-    """
-    Prints each entry of a results dictionary, rounded to 4 places.
-    Very small values (like tiny p-values) are printed without rounding
-    so they do not show up as 0.
-    """
+    """Prints each entry of a results dictionary, rounded to 4 places."""
     print(name)
     for key in results:
-        value = results[key]
-        if value != 0 and abs(value) < 0.001:
-            print('  ' + key + ':', value)
-        else:
-            print('  ' + key + ':', round(value, 4))
+        print('  ' + key + ':', round(results[key], 4))
 
 
 def print_header(text):
