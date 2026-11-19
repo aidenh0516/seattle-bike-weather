@@ -1,0 +1,6 @@
+"trip_id","starttime","stoptime","bikeid","tripduration","from_station_name","to_station_name","from_station_id","to_station_id","usertype","gender","birthyear"
+1,"10/13/2014 10:31","10/13/2014 10:41","SEA1",600,"A St","B St","CH-01","SLU-01","Member","Male",1990
+2,"10/13/2014 11:00","10/13/2014 11:20","SEA2",1200,"A St","C St","CH-01","CBD-01","Short-Term Pass Holder",,
+3,"10/18/2014 09:00","10/18/2014 09:30","SEA3",1800,"B St","A St","SLU-01","CH-01","Short-Term Pass Holder",,
+4,"10/19/2014 12:00","10/19/2014 12:05","SEA4",300,"Shop","A St","Pronto shop","CH-01","Member","Female",1985
+5,"10/19/2014 13:00","10/19/2014 13:01","SEA5",60,"C St","A St","CBD-01","CH-01","Member","Other",1980,"extra","fields"

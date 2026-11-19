@@ -1,0 +1,5 @@
+"Date","Max_Temperature_F","Mean_Temperature_F","Min_TemperatureF","Max_Gust_Speed_MPH","Precipitation_In","Events"
+"10/13/2014",70,60,50,"21",0,"Rain"
+"10/18/2014",64,,56,"-",0.5,
+"10/19/2014",80,72,64,"15",0,
+"10/20/2014",50,45,40,"10",1.0,"Rain"

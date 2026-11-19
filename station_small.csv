@@ -1,0 +1,4 @@
+"station_id","name","lat","long","install_date","install_dockcount","modification_date","current_dockcount","decommission_date"
+"CH-01","A St",47.61,-122.32,"10/13/2014",18,,18,
+"SLU-01","B St",47.62,-122.33,"10/13/2014",16,,16,
+"CBD-01","C St",47.60,-122.34,"10/13/2014",20,,20,
