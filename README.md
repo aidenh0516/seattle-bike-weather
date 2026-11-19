@@ -22,4 +22,4 @@ next to `eda.py`.
 python eda.py        # prints results, saves the plots
 python test_eda.py   # runs the tests (the last test needs data/)
 ```
-Requires pandas, matplotlib, seaborn, and scipy.
+Requires pandas, matplotlib, and seaborn.
